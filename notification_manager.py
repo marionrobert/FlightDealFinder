@@ -29,7 +29,8 @@ class NotificationManager:
                   f"From: {data.origin_city} - Airport: {data.origin_airport}\n" \
                   f"To: {data.destination_city} - Airport: {data.destination_airport}\n" \
                   f"Outbound Date: {data.out_date}\n" \
-                  f"Inbound Date: {data.return_date}\n"
+                  f"Inbound Date: {data.return_date}\n" \
+                  f"Check the flight here: {data.link}"
         print(message)
         if data.stop_overs > 0:
             message += f"\nFlight has {data.stop_overs} stop over, via {data.via_city}."

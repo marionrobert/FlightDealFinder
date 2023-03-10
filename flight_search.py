@@ -66,7 +66,8 @@ class FlightSearch:
                     out_date=data["route"][0]["local_departure"].split("T")[0],
                     return_date=data["route"][2]["local_departure"].split("T")[0],
                     stop_overs=1,
-                    via_city=data["route"][0]["cityTo"]
+                    via_city=data["route"][0]["cityTo"],
+                    link=data["deep_link"]
                 )
                 print(f"Flight for {flight_data.destination_city} : {data['price']} €\n")
                 return flight_data
@@ -78,7 +79,8 @@ class FlightSearch:
                 destination_city=data["route"][0]["cityTo"],
                 destination_airport=data["route"][0]["flyTo"],
                 out_date=data["route"][0]["local_departure"].split("T")[0],
-                return_date=data["route"][1]["local_departure"].split("T")[0]
+                return_date=data["route"][1]["local_departure"].split("T")[0],
+                link=data["deep_link"]
             )
             print(f"Flight for {flight_data.destination_city} : {data['price']} €\n")
             return flight_data
