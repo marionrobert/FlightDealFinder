@@ -1,7 +1,9 @@
 import requests
+import os
 
 SHEETY_ENDPOINT = "https://api.sheety.co/075a1aa8ceadab13ed826945168b2fff/flightDeals/prices"
-SHEETY_HEADERS = {"Authorization": "Bearer erg4es64fd^dfnhf"}
+SHEETY_HEADERS = {"Authorization": os.environ["TOKEN"]}
+
 
 class DataManager:
     def __init__(self):
