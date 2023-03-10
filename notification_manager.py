@@ -25,7 +25,7 @@ class NotificationManager:
 
     def send_email(self, data: FlightData):
         message = f"Subject:Interesting price for {data.destination_city}\n\n" \
-                  f"Price: {data.price} euros\n" \
+                  f"Price: {data.price} €\n" \
                   f"From: {data.origin_city} - Airport: {data.origin_airport}\n" \
                   f"To: {data.destination_city} - Airport: {data.destination_airport}\n" \
                   f"Outbound Date: {data.out_date}\n" \
@@ -40,5 +40,5 @@ class NotificationManager:
             for email in self.all_emails:
                 connection.sendmail(from_addr=MY_EMAIL,
                                     to_addrs=email,
-                                    msg=f"{message}")
+                                    msg=f"{message}".encode('utf-8'))
 
