@@ -10,12 +10,15 @@ notification_manager = NotificationManager()
 
 ORIGIN_CITY_IATA = "PAR"
 
+# make sur all the citines have iata code in the google sheet
 if sheet_data[0]["iataCode"] == "":
     for row in sheet_data:
         row["iataCode"] = flight_search.get_destination_code(row["city"])
-    data_manager.destination_data = sheet_data
+    data_manager.get_destination_data = sheet_data
     data_manager.update_destination_codes()
 
+
+# search for flights with low price
 tomorrow = datetime.now() + timedelta(days=1)
 six_month_from_today = datetime.now() + timedelta(days=(6 * 30))
 
@@ -28,7 +31,8 @@ for destination in sheet_data:
     )
 
     try:
-        if flight.price <= destination["lowestPrice"]:
+        # send email if the price is lower
+        if flight.price < destination["lowestPrice"]:
             notification_manager.send_email(flight)
     except AttributeError:
         continue

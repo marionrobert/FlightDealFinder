@@ -1,13 +1,26 @@
 from flight_data import FlightData
 import smtplib
 import os
+import requests
 
 MY_EMAIL = os.environ["MY_EMAIL"]
 GMAIL_SERVER = "smtp.gmail.com"
 MY_PASSWORD = os.environ["MY_PASSWORD"]
-EMAIL_TEST = os.environ["EMAIL_TEST"]
+# EMAIL_TEST = os.environ["EMAIL_TEST"]
+USERS_SHEETY_ENDPOINT = "https://api.sheety.co/075a1aa8ceadab13ed826945168b2fff/flightDeals/users"
+HEADERS = {"Authorization": os.environ['TOKEN']}
+
 
 class NotificationManager:
+    def __init__(self):
+        self.all_emails = []
+        self.get_emails_list()
+
+    def get_emails_list(self):
+        response = requests.get(url=USERS_SHEETY_ENDPOINT, headers=HEADERS)
+        users_data = response.json()["users"]
+        self.all_emails = [user["email"] for user in users_data]
+
     #This class is responsible for sending notifications with the deal flight details.
     def send_email(self, data: FlightData):
         message = f"Subject:Interesting price for {data.destination_city}\n\n" \
@@ -23,6 +36,8 @@ class NotificationManager:
         with smtplib.SMTP(GMAIL_SERVER) as connection:
             connection.starttls()
             connection.login(MY_EMAIL, MY_PASSWORD)
-            connection.sendmail(from_addr=MY_EMAIL,
-                                to_addrs=EMAIL_TEST,
-                                msg=f"{message}")
+            for email in self.all_emails:
+                connection.sendmail(from_addr=MY_EMAIL,
+                                    to_addrs=email,
+                                    msg=f"{message}")
+
