@@ -26,10 +26,11 @@ for destination in sheet_data:
         from_time=tomorrow,
         to_time=six_month_from_today
     )
+
     try:
         if flight.price <= destination["lowestPrice"]:
             notification_manager.send_email(flight)
     except AttributeError:
-        pass
+        continue
 
 
