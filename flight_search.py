@@ -3,8 +3,7 @@ from flight_data import FlightData
 import os
 
 TEQUILA_ENDPOINT = "https://api.tequila.kiwi.com"
-TEQUILA_API_KEY = os.environ["TEQUILA_API_KEY"]
-TEQUILA_HEADERS = {"apikey": TEQUILA_API_KEY}
+TEQUILA_HEADERS = {"apikey": os.environ["TEQUILA_API_KEY"]}
 
 
 class FlightSearch:
@@ -22,14 +21,14 @@ class FlightSearch:
         return code
 
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
-        headers = {"apikey": TEQUILA_API_KEY}
+        headers = {"apikey": os.environ["TEQUILA_API_KEY"]}
         query = {
             "fly_from": origin_city_code,
             "fly_to": destination_city_code,
             "date_from": from_time.strftime("%d/%m/%Y"),
             "date_to": to_time.strftime("%d/%m/%Y"),
             "nights_in_dst_from": 7,
-            "nights_in_dst_to": 28,
+            "nights_in_dst_to": 14,
             "flight_type": "round",
             "one_for_city": 1,
             "max_stopovers": 0,
