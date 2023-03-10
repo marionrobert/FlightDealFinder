@@ -7,8 +7,10 @@ MY_EMAIL = os.environ["MY_EMAIL"]
 GMAIL_SERVER = "smtp.gmail.com"
 MY_PASSWORD = os.environ["MY_PASSWORD"]
 # EMAIL_TEST = os.environ["EMAIL_TEST"]
-USERS_SHEETY_ENDPOINT = "https://api.sheety.co/075a1aa8ceadab13ed826945168b2fff/flightDeals/users"
+USERS_SHEETY_ENDPOINT = f"{os.environ['SHEETY_ENDPOINT']}/users"
 HEADERS = {"Authorization": os.environ['TOKEN']}
+
+# link to the flightclub registration code: https://replit.com/@MarionROBERT/FlightClub
 
 
 class NotificationManager:
@@ -21,7 +23,6 @@ class NotificationManager:
         users_data = response.json()["users"]
         self.all_emails = [user["email"] for user in users_data]
 
-    #This class is responsible for sending notifications with the deal flight details.
     def send_email(self, data: FlightData):
         message = f"Subject:Interesting price for {data.destination_city}\n\n" \
                   f"Price: {data.price} euros\n" \

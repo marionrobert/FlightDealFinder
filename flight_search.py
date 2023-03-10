@@ -1,7 +1,6 @@
 import requests
 from flight_data import FlightData
 import os
-import pprint
 
 TEQUILA_ENDPOINT = "https://api.tequila.kiwi.com"
 TEQUILA_HEADERS = {"apikey": os.environ["TEQUILA_API_KEY"]}
@@ -54,9 +53,8 @@ class FlightSearch:
             )
             try:
                 data = response.json()["data"][0]
-                pprint(data)
             except IndexError:
-                print(f"No flights found for {destination_city_code} with 1 stopover.")
+                print(f"No flights found for {destination_city_code} with 1 stopover.\n")
                 return None
             else:
                 flight_data = FlightData(
@@ -70,7 +68,7 @@ class FlightSearch:
                     stop_overs=1,
                     via_city=data["route"][0]["cityTo"]
                 )
-                print(f"{destination_city_code} : {data['price']} €")
+                print(f"Flight for {flight_data.destination_city} : {data['price']} €\n")
                 return flight_data
         else:
             flight_data = FlightData(
@@ -82,7 +80,7 @@ class FlightSearch:
                 out_date=data["route"][0]["local_departure"].split("T")[0],
                 return_date=data["route"][1]["local_departure"].split("T")[0]
             )
-            print(f"{destination_city_code} : {data['price']} €")
+            print(f"Flight for {flight_data.destination_city} : {data['price']} €\n")
             return flight_data
 
 
